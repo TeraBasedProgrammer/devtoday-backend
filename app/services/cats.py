@@ -20,10 +20,12 @@ class CatService(BaseService):
         self.session = session
 
     async def get_cats(self) -> list[CatSchema]:
+        logger.info("Getting all cats")
         cats_data = await self.get_all(select(Cat))
         return [CatSchema(**cat.__dict__) for cat in cats_data]
 
     async def get_cat(self, cat_id: uuid.UUID) -> CatSchema:
+        logger.info("Getting a cat by id")
         cat_instance: Optional[Cat] = await self.get_instance(
             select(Cat).where(Cat.id == cat_id)
         )
@@ -54,6 +56,7 @@ class CatService(BaseService):
     async def update_cat(
         self, cat_id: uuid.UUID, cat_data: CatUpdateSchema
     ) -> CatSchema:
+        logger.info("Updating a cat")
         cat_instance = await self.get_instance(select(Cat).where(Cat.id == cat_id))
         if not cat_instance:
             raise HTTPException(
@@ -65,7 +68,8 @@ class CatService(BaseService):
         return CatSchema(**updated_cat.__dict__)
 
     async def delete_cat(self, cat_id: uuid.UUID) -> None:
-        cat_data = await self.get_instance(
+        logger.info("Deleting a cat")
+        cat_data: Optional[Cat] = await self.get_instance(
             select(Cat).where(Cat.id == cat_id).options(joinedload(Cat.missions))
         )
         if not cat_data:
