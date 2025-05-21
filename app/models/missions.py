@@ -11,10 +11,10 @@ class Target(BaseModel):
 
     name: Mapped[str] = mapped_column(String, nullable=False)
     country: Mapped[str] = mapped_column(String, nullable=False)
-    notes: Mapped[str] = mapped_column(Text, nullable=True)
+    notes: Mapped[str] = mapped_column(String, nullable=True)
     is_completed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     mission_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("missions.id"), nullable=False
+        ForeignKey("missions.id", ondelete="CASCADE"), nullable=False
     )
 
     mission: Mapped["Mission"] = relationship(back_populates="targets")
@@ -30,6 +30,7 @@ class Mission(BaseModel):
     is_completed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
 
     targets: Mapped[list[Target]] = relationship(Target, back_populates="mission")
+    cat: Mapped["Cat"] = relationship(back_populates="missions")
 
     def __repr__(self) -> str:
         return f"<Mission(cat_id={self.cat_id})>"

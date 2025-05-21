@@ -2,14 +2,14 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class CatCreateSchema(BaseModel):
-    name: str
-    breed: str
-    experience: int
-    salary: int
+    name: str = Field(..., max_length=100)
+    breed: str = Field(..., max_length=100)
+    experience: int = Field(..., gt=0)
+    salary: int = Field(..., gt=0)
 
 
 class CatSchema(CatCreateSchema):
@@ -22,4 +22,4 @@ class CatSchema(CatCreateSchema):
 
 
 class CatUpdateSchema(BaseModel):
-    salary: Optional[int] = None
+    salary: Optional[int] = Field(None, gt=0)

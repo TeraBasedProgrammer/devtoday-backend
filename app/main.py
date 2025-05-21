@@ -4,6 +4,7 @@ import logging.config
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.endpoints import router
 from app.config.logs.log_config import LOGGING_CONFIG
 from app.config.settings import settings
 
@@ -11,6 +12,8 @@ from app.config.settings import settings
 logging.config.dictConfig(LOGGING_CONFIG)
 
 app = FastAPI(title="DevelopersToday Test Task")
+
+app.include_router(router)
 
 app.add_middleware(
     CORSMiddleware,
