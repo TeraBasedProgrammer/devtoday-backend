@@ -1,0 +1,33 @@
+# Byte-compiled, optimized, and DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Cache
+.cache
+.webassets-cache
+
+# Code editor (IntelliJ & VSCode)
+.settings/
+.vscode/
+!.vscode/extensions.json
+
+# Database-related
+postgres-data
+
+# Distributions package
+.Python
+wheels/
+
+# Dotenvs
+# .env | Disabled in order for reviewers to be able to test the application 
+
+# Log Files
+*.log
+pip-log.txt
+
+# Other files
+Makefile
+.pre-commit-config.yaml
+custom_pg_hba.conf
+task.md
